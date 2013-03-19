@@ -3,6 +3,7 @@ git config --global user.name "John Doe"			Установить глобальн
 git config --global user.email johndoe@example.com		Установить глобально электронный адрес
 git config --global core.editor kwrite				Установить глобально редактор текста
 git config --global merge.tool meld				Установить глобально программу для разрешения конфликтов
+git config --global color.ui true				Установить глобально цветной вывод на терминал
 git config --list						Посмотреть используемые настройки
 git config user.name						Посмотреть значение настройки, в данном случае имени пользователя
 
