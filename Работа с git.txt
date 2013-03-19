@@ -1,1 +1,15 @@
+git init 							создание в текущем каталоге репозитория git
+git add .							добавить в индекс все файлы текущего и вложенных каталогов (кроме файлов указанных в .gitignore)
+git commit							Зафиксировать индекс (для формирования комментария будет вызван редактор указанны в core.editor)
+git commit -a -m 'first commit'					Зафиксировать все изменения (-a) с указанным комметарием (-m)
+git remote add origin git@github.com:username/reponame.git	Добавить удаленный репозитарий под именем origin
+git branch --set-upstream-to=origin/master master		Настроить удаленный репозиторий и ветку из которой будут браться изменения (origin/master) 
+								и локальную ветку куда эти изменения будут вливаться (master)
+git pull							Взять изменения из удаленного репозитария
+git push							Отправить свои изменения в удаленный репозитарий
+git branch							Показать список веток
+git branch ticket42						Создать новую ветку ticket42
+git checkout ticket42						Переключится на ветку ticket42
+git merge ticket42						Слить текущую ветку и ветку ticket42
+git mergetool							Запустить программу, указанную в merge.tool для разрешения конфликта
 
