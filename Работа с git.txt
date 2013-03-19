@@ -1,4 +1,5 @@
 git init 							создание в текущем каталоге репозитория git
+git add readme.txt						добавить в индекс файл readme.txt
 git add .							добавить в индекс все файлы текущего и вложенных каталогов (кроме файлов указанных в .gitignore)
 git commit							Зафиксировать индекс (для формирования комментария будет вызван редактор указанны в core.editor)
 git commit -a -m 'first commit'					Зафиксировать все изменения (-a) с указанным комметарием (-m)
@@ -12,4 +13,4 @@ git branch ticket42						Создать новую ветку ticket42
 git checkout ticket42						Переключится на ветку ticket42
 git merge ticket42						Слить текущую ветку и ветку ticket42
 git mergetool							Запустить программу, указанную в merge.tool для разрешения конфликта
-
+git rm --cached readme.txt					Удалить файл readme.txt из индекса, но оставить его в рабочем каталоге
