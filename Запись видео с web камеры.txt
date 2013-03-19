@@ -1,2 +1,4 @@
+Запись видео с web камеры без звука
 mencoder tv:// -fps 15 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -ovc lavc -lavcopts vcodec=mjpeg -nosound -o test.avi
-Запись видео с web камеры 
+Запись видео с web камеры со звуком
+mencoder tv:// -fps 15 -tv driver=v4l2:width=640:height=480:device=/dev/video0:alsa:forceaudio:amode=0:adevice=hw.1,0 -ovc lavc -lavcopts vcodec=mpeg4 -oac mp3lame -lameopts vbr=3:br=32:mode=3 -af volnorm -o test.avi
