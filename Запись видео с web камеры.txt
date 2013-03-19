@@ -1,0 +1,2 @@
+mencoder tv:// -fps 15 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -ovc lavc -lavcopts vcodec=mjpeg -nosound -o test.avi
+Запись видео с web камеры 
