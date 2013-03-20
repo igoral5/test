@@ -1,5 +1,6 @@
 master
 C1
+C2
 server
 client
 
