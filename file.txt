@@ -5,15 +5,6 @@
 Это изменение сделано в ветке hotfix
 Изменения сделанное на ветке ticket42
 master
-C2
-C5
-C6
-C7
+C1
 server
-C3
-C4
-C10
 client
-C8
-C9
-
