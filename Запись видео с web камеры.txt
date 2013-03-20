@@ -31,7 +31,8 @@ mencoder tv:// -fps 15 -tv driver=v4l2:width=640:height=480:device=/dev/video0:a
 													    1: стерео
 													    2: язык 1
 													    3: язык 2
-	  adevice=hw.1,0										Устанавливает аудио устройство. <значение> должно быть /dev/xxx для OSS и аппаратный ID для ALSA. Вы должны заменить любые ':' на '.' в ID для ALSA.
+	  adevice=hw.1,0										Устанавливает аудио устройство. <значение> должно быть /dev/xxx для OSS и аппаратный ID для ALSA. 
+													Вы должны заменить любые ':' на '.' в ID для ALSA.
   -ovc lavc 												Кодировать видео libavcodec кодеком
   -lavcopts vcodec=mpeg4										Субопции libavcodec кодека
 	  vcodec=mpeg4											Кодировать выходной файл алгоритмом MPEG-4 (DivX 4/5)
@@ -79,7 +80,8 @@ mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0:alsa:force
 													    1: стерео
 													    2: язык 1
 													    3: язык 2
-	  adevice=hw.1,0										Устанавливает аудио устройство. <значение> должно быть /dev/xxx для OSS и аппаратный ID для ALSA. Вы должны заменить любые ':' на '.' в ID для ALSA.
+	  adevice=hw.1,0										Устанавливает аудио устройство. <значение> должно быть /dev/xxx для OSS и аппаратный ID для ALSA. 
+													Вы должны заменить любые ':' на '.' в ID для ALSA.
 
 
 	  
