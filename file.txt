@@ -6,5 +6,6 @@
 Изменения сделанное на ветке ticket42
 master
 C1
+C2
 server
 client
