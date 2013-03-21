@@ -84,58 +84,58 @@
 ### Команды работы с ветками
 <table>
 <tr>
-<th align="left">Комманда</th><th align="left">Описание</th>
+<th>Комманда</th><th>Описание</th>
 </tr>
 <tr>
-<td align="left"><code>git branch</code></td><td align="left">Показать список веток</td>
+<td><code>git branch</code></td><td>Показать список веток</td>
 </tr>
 <tr>
-<td align="left"><code>git branch -v</code></td><td align="left">Показать более подробный список веток</td>
+<td><code>git branch -v</code></td><td>Показать более подробный список веток</td>
 </tr>
 <tr>
-<td align="left"><code>git branch -r</code></td><td align="left">Показать список веток полученных из удаленных репозитариев</td>
+<td><code>git branch -r</code></td><td>Показать список веток полученных из удаленных репозитариев</td>
 </tr>
 <tr>
-<td align="left"><code>git branch --merged</code></td><td align="left">Показать список слитых веток</td>
+<td><code>git branch --merged</code></td><td>Показать список слитых веток</td>
 </tr>
 <tr>
-<td align="left"><code>git branch --no-merged</code></td><td align="left">Показать список веток, в которых есть неслитые коммиты</td>
+<td><code>git branch --no-merged</code></td><td>Показать список веток, в которых есть неслитые коммиты</td>
 </tr>
 <tr>
-<td align="left"><code>git branch ticket42</code></td><td align="left">Создать новую ветку ticket42</td>
+<td><code>git branch ticket42</code></td><td>Создать новую ветку ticket42</td>
 </tr>
 <tr>
-<td align="left"><code>git checkout ticket42</code></td><td align="left">Переключится на ветку ticket42</td>
+<td><code>git checkout ticket42</code></td><td>Переключится на ветку ticket42</td>
 </tr>
 <tr>
-<td align="left"><code>git checkout -b ticket42</code></td><td align="left">Создать новую ticket42 и переключится на нее</td>
+<td><code>git checkout -b ticket42</code></td><td>Создать новую ticket42 и переключится на нее</td>
 </tr>
 <tr>
-<td align="left"><code>git checkout -b serverfix origin/serverfix</code></td><td align="left">Создать локальную ветку serverfix, которая будет отслеживать состояние, удаленной ветки serverfix в репозитарии origin и переключится на нее. До этого удаленную ветку необходимо получить командой git fetch origin</td>
+<td><code>git checkout -b serverfix origin/serverfix</code></td><td>Создать локальную ветку serverfix, которая будет отслеживать состояние, удаленной ветки serverfix в репозитарии origin и переключится на нее. До этого удаленную ветку необходимо получить командой git fetch origin</td>
 </tr>
 <tr>
-<td alig="left"><code>git checkout --track origin/serverfix</code></td><td align="left">Более короткая форма предыдущей команды. Будет создана локальная ветка serverfix, которая будет отслеживать состояние удаленной ветки origin/serverfix и переключится на нее</td>
+<td><code>git checkout --track origin/serverfix</code></td><td>Более короткая форма предыдущей команды. Будет создана локальная ветка serverfix, которая будет отслеживать состояние удаленной ветки origin/serverfix и переключится на нее</td>
 </tr>
 <tr>
-<td align="left"><code>git merge ticket42</code></td><td align="left">Слить текущую ветку и ветку ticket42</td>
+<td><code>git merge ticket42</code></td><td>Слить текущую ветку и ветку ticket42</td>
 </tr>
 <tr>
-<td align="left"><code>git mergetool</code></td><td align="left">Запустить программу, указанную в merge.tool для разрешения конфликта</td>
+<td><code>git mergetool</code></td><td>Запустить программу, указанную в merge.tool для разрешения конфликта</td>
 </tr>
 <tr>
-<td align="left"><code>git branch -d ticket42</code></td><td alig="left">Удалить ветку ticket42, при этом все коммиты в этой ветке должны быть влиты</td>
+<td><code>git branch -d ticket42</code></td><td>Удалить ветку ticket42, при этом все коммиты в этой ветке должны быть влиты</td>
 </tr>
 <tr>
-<td align="left"><code>git branch -D ticket42</code></td><td align="left">Удалить ветку ticket42, в которой могут быть не влитые коммиты</td>
+<td><code>git branch -D ticket42</code></td><td>Удалить ветку ticket42, в которой могут быть не влитые коммиты</td>
 </tr>
 <tr>
-<td align="left"><code>git push origin :serverfix</code></td><td align="left">Удалить из удаленного репозитария ветку serverfix</td>
+<td><code>git push origin :serverfix</code></td><td>Удалить из удаленного репозитария ветку serverfix</td>
 </tr>
 <tr>
-<td align="left"><code>git rebase master</code></td><td align="left">Перемещение текущей ветки на ветку master</td>
+<td><code>git rebase master</code></td><td>Перемещение текущей ветки на ветку master</td>
 </tr>
 <tr>
-<td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид дерева ветвления:
+<td><code>git rebase --onto master server client</code></td><td>Пусть имеем следующуй вид дерева ветвления:
 <pre>
                master
                  |
@@ -176,7 +176,7 @@
 </td>
 </tr>
 <tr>
-<td align="left"><code>git rebase master server</code></td><td align="left">Продолжим работать с деревом веток из предыдущего пояснения, эта команда приведет с следующему виду:
+<td><code>git rebase master server</code></td><td>Продолжим работать с деревом веток из предыдущего пояснения, эта команда приведет с следующему виду:
 <pre>
                         client
                           |
