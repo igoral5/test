@@ -171,18 +171,18 @@
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'&lt;-C3'&lt;-C4'&lt;-C10'
                           |              |
                         master         server
-</pre>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server
-<code>git checkout master</code>
-<code>git merge server<code>
+</pre>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server<br>
+<code>git checkout master</code><br>
+<code>git merge server<code><br>
 Получаем следующее:<pre>
                         client         master
                           |              |
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'&lt;-C3'&lt;-C4'&lt;-C10'
                                          |
                                        server
-</pre>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:
-<code>git branch -d client</code>
-<code>git branch -d server</code> 
+</pre>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:<br>
+<code>git branch -d client</code><br>
+<code>git branch -d server</code><br>
 Кроме того получена линейная структура коммитов, которую будет понятнее смотреться в удаленном репозитарии</td>
 </tr>
 </table>
