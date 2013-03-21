@@ -132,7 +132,7 @@
 <td align="left"><code>git push origin :serverfix</code></td><td align="left">Удалить из удаленного репозитария ветку serverfix</td>
 </tr>
 <tr>
-<td align="left"><code>git rebase master</code.</td><td align="left">Перемещение текущей ветки на ветку master</td>
+<td align="left"><code>git rebase master</code></td><td align="left">Перемещение текущей ветки на ветку master</td>
 </tr>
 <tr>
 <td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид веток:<pre>
@@ -171,13 +171,19 @@
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'&lt;-C3'&lt;-C4'&lt;-C10'
                           |              |
                         master         server
-</pre>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server<code>git checkout master</code> <code>git merge server<code>Получаем следующее:<pre>
+</pre>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server
+<code>git checkout master</code>
+<code>git merge server<code>
+Получаем следующее:<pre>
                         client         master
                           |              |
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'&lt;-C3'&lt;-C4'&lt;-C10'
                                          |
                                        server
-</pre>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:<code>git branch -d client</code> <code>git branch -d server</code> Кроме того получена линейная структура коммитов, которую будет понятнее смотреться в удаленном репозитарии</td>
+</pre>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:
+<code>git branch -d client</code>
+<code>git branch -d server</code> 
+Кроме того получена линейная структура коммитов, которую будет понятнее смотреться в удаленном репозитарии</td>
 </tr>
 </table>
 
