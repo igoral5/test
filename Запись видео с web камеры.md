@@ -25,7 +25,7 @@ mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0:a
 |:---------------------------------------------------|:------------------------------------------------------------------------------|
 |tv://                                               | Указывает на необходимость захвата видео                                      |
 |-fps 30                                             | Частота кадров 30 кадров в секунду                                            |
-|-tv driver=v4l2:width=640:height=480:device=/dev/video0:alsa:forceaudio:amode=0:adevice=hw.1,0| Субопции уточняющие режим захвата видео |
+|-tv driver=v4l2:width=640:height=480:device=/dev/video0:<br>alsa:forceaudio:amode=0:adevice=hw.1,0| Субопции уточняющие режим захвата видео |
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver=v4l2     | Драйвер видео захвата Video for Linux v.2                                     |
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width=640       | Ширина видео 640                                                              |
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height=480      | Высота видео 480                                                              |
