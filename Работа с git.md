@@ -137,7 +137,7 @@
 <tr>
 <td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид веток:<pre>
                master
-                 |    
+                 |
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7
      \
       C3&lt;-C4&lt;-C10
@@ -154,7 +154,7 @@
       C3&lt;-C4&lt;-C10
                |
              server
-</pre>То есть ветка client в свое время основанная на ветке server, перебазируется на ветку master, причем изменения сделанные на ветке server не попадают в ветку master, в том числе коммит C3. Если теперь переключится на ветку master:`git checkout master` и сделать `git merge client` получим следущую картину:<pre>
+</pre>То есть ветка client в свое время основанная на ветке server, перебазируется на ветку master, причем изменения сделанные на ветке server не попадают в ветку master, в том числе коммит C3. Если теперь переключится на ветку master:<code>git checkout master</code> и сделать <code>git merge client</code> получим следущую картину:<pre>
                         client
                           |
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'
