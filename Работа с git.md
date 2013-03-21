@@ -138,28 +138,28 @@
 <td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид веток:<pre>
                master
                  |    
-С1<-C2<-С5<-C6<-C7
+С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7
      \
-      C3<-C4<-C10
+      C3&lt;-C4&lt;-C10
        \       |
         \    server
-         C8<-C9
+         C8&lt;-C9
               |
             client
 </pre>После выполнения этой команды будем иметь:<pre>
                master   client
                  |        |
-С1<-C2<-С5<-C6<-C7<-C8'<-C9'
+С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'
      \
-      C3<-C4<-C10
+      C3&lt;-C4&lt;-C10
                |
              server
 <pre>То есть ветка client в свое время основанная на ветке server, перебазируется на ветку master, причем изменения сделанные на ветке server не попадают в ветку master, в том числе коммит C3. Если теперь переключится на ветку master:`git checkout master` и сделать `git merge client` получим следущую картину:<pre>
                         client
                           |
-С1<-C2<-С5<-C6<-C7<-C8'<-C9'
+С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'
      \                    |
-      C3<-C4<-C10       master
+      C3&lt;-C4&lt;-C10       master
                |
              server
 </pre>Фактически все изменения сделанные на тематической ветке client, влиты в основную ветку master, а изменения сделанные на ветке server нет.</td>
@@ -168,13 +168,13 @@
 <td align="left"><code>git rebase master server</code></td><td align="left">Продолжим работать с деревом веток из предыдущего пояснения, эта команда приведет с следующему виду:<pre>
                         client
                           |
-С1<-C2<-С5<-C6<-C7<-C8'<-C9'<-C3'<-C4'<-C10'
+С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'&lt;-C3'&lt;-C4'&lt;-C10'
                           |              |
                         master         server
 </pre>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server<code>git checkout master</code> <code>git merge server<code>Получаем следующее:<pre>
                         client         master
                           |              |
-С1<-C2<-С5<-C6<-C7<-C8'<-C9'<-C3'<-C4'<-C10'
+С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7&lt;-C8'&lt;-C9'&lt;-C3'&lt;-C4'&lt;-C10'
                                          |
                                        server
 </pre>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:<code>git branch -d client</code> <code>git branch -d server</code> Кроме того получена линейная структура коммитов, которую будет понятнее смотреться в удаленном репозитарии</td>
