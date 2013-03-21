@@ -82,26 +82,60 @@
 |`git push origin --tags`                                     | Отправить все неотправленные метки в удаленный репозитарий             |
 
 ### Команды работы с ветками
-
-| Комманда                                                    |  Описание                                                              |
-|:------------------------------------------------------------|:-----------------------------------------------------------------------|
-|`git branch`                                                 | Показать список веток                                                  |
-|`git branch -v`                                              | Показать более подробный список веток                                  |
-|`git branch -r`                                              | Показать список веток полученных из удаленных репозитариев             |
-|`git branch --merged`                                        | Показать список слитых веток                                           |
-|`git branch --no-merged`                                     | Показать список веток, в которых есть неслитые коммиты                 |
-|`git branch ticket42`                                        | Создать новую ветку ticket42                                           |
-|`git checkout ticket42`                                      | Переключится на ветку ticket42                                         |
-|`git checkout -b ticket42`                                   | Создать новую ticket42 и переключится на нее                           |
-|`git checkout -b serverfix origin/serverfix`                 | Создать локальную ветку serverfix, которая будет отслеживать состояние, удаленной ветки serverfix в репозитарии origin и переключится на нее. До этого удаленную ветку необходимо получить командой git fetch origin |
-|`git checkout --track origin/serverfix`                      | Более короткая форма предыдущей команды. Будет создана локальная ветка serverfix, которая будет отслеживать состояние удаленной ветки origin/serverfix и переключится на нее |
-|`git merge ticket42`                                         | Слить текущую ветку и ветку ticket42                                   |
-|`git mergetool`                                              | Запустить программу, указанную в merge.tool для разрешения конфликта   |
-|`git branch -d ticket42`                                     | Удалить ветку ticket42, при этом все коммиты в этой ветке должны быть влиты |
-|`git branch -D ticket42`                                     | Удалить ветку ticket42, в которой могут быть не влитые коммиты         |
-|`git push origin :serverfix`                                 | Удалить из удаленного репозитария ветку serverfix                      |
-|`git rebase master`                                          | Перемещение текущей ветки на ветку master                              |
-|`git rebase --onto master server client`                     <td>Пусть имеем следующуй вид веток:<pre>
+<table>
+<tr>
+<th align="left">Комманда</th><th align="left">Описание</th>
+</tr>
+<tr>
+<td align="left"><code>git branch</code></td><td align="left">Показать список веток</td>
+</tr>
+<tr>
+<td align="left"><code>git branch -v</code></td><td align="left">Показать более подробный список веток</td>
+</tr>
+<tr>
+<td align="left"><code>git branch -r</code></td><td align="left">Показать список веток полученных из удаленных репозитариев</td>
+</tr>
+<tr>
+<td align="left"><code>git branch --merged</code></td><td align="left">Показать список слитых веток</td>
+</tr>
+<tr>
+<td align="left"><code>git branch --no-merged</code></td><td align="left">Показать список веток, в которых есть неслитые коммиты</td>
+</tr>
+<tr>
+<td align="left"><code>git branch ticket42</code></td><td align="left">Создать новую ветку ticket42</td>
+</tr>
+<tr>
+<td align="left"><code>git checkout ticket42</code></td><td align="left">Переключится на ветку ticket42</td>
+</tr>
+<tr>
+<td align="left"><code>git checkout -b ticket42</code></td><td align="left">Создать новую ticket42 и переключится на нее</td>
+</tr>
+<tr>
+<td align="left"><code>git checkout -b serverfix origin/serverfix</code></td><td align="left">Создать локальную ветку serverfix, которая будет отслеживать состояние, удаленной ветки serverfix в репозитарии origin и переключится на нее. До этого удаленную ветку необходимо получить командой git fetch origin</td>
+</tr>
+<tr>
+<td alig="left"><code>git checkout --track origin/serverfix</code></td><td align="left">Более короткая форма предыдущей команды. Будет создана локальная ветка serverfix, которая будет отслеживать состояние удаленной ветки origin/serverfix и переключится на нее</td>
+</tr>
+<tr>
+<td align="left"><code>git merge ticket42</code></td><td align="left">Слить текущую ветку и ветку ticket42</td>
+</tr>
+<tr>
+<td align="left"><code>git mergetool</code></td><td align="left">Запустить программу, указанную в merge.tool для разрешения конфликта</td>
+</tr>
+<tr>
+<td align="left"><code>git branch -d ticket42</code></td><td alig="left">Удалить ветку ticket42, при этом все коммиты в этой ветке должны быть влиты</td>
+</tr>
+<tr>
+<td align="left"><code>git branch -D ticket42</code></td><td align="left">Удалить ветку ticket42, в которой могут быть не влитые коммиты</td>
+</tr>
+<tr>
+<td align="left"><code>git push origin :serverfix</code></td><td align="left">Удалить из удаленного репозитария ветку serverfix</td>
+</tr>
+<tr>
+<td align="left"><code>git rebase master</code.</td><td align="left">Перемещение текущей ветки на ветку master</td>
+</tr>
+<tr>
+<td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид веток:<pre>
                master
                  |    
 С1<-C2<-С5<-C6<-C7
@@ -129,4 +163,21 @@
                |
              server
 </pre>Фактически все изменения сделанные на тематической ветке client, влиты в основную ветку master, а изменения сделанные на ветке server нет.</td>
-|`git rebase master server`                                   | Продолжим работать с деревом веток из предыдущего пояснения, эта команда приведет с следующему виду:<br>`                        client`<br>`                          |`<br>`С1<-C2<-С5<-C6<-C7<-C8'<-C9'<-C3'<-C4'<-C10'`<br>`                          |              |`<br>`                        master         server`<br>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server<br>`git checkout master`<br>`git merge server`<br>Получаем следующее:<br>`                        client         master`<br>`                          |              |`<br>`С1<-C2<-С5<-C6<-C7<-C8'<-C9'<-C3'<-C4'<-C10'`<br>`                                         |`<br>`                                       server`<br>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:<br>`git branch -d client`<br>`git branch -d server`<br>Кроме того получена линейная структура коммитов, которую будет понятнее смотреться в удаленном репозитарии |
+</tr>
+<tr>
+<td align="left"><code>git rebase master server</code></td><td align="left">Продолжим работать с деревом веток из предыдущего пояснения, эта команда приведет с следующему виду:<pre>
+                        client
+                          |
+С1<-C2<-С5<-C6<-C7<-C8'<-C9'<-C3'<-C4'<-C10'
+                          |              |
+                        master         server
+</pre>Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server<code>git checkout master</code> <code>git merge server<code>Получаем следующее:<pre>
+                        client         master
+                          |              |
+С1<-C2<-С5<-C6<-C7<-C8'<-C9'<-C3'<-C4'<-C10'
+                                         |
+                                       server
+</pre>В итоге все изменения сделанные на ветках client и server влиты в основную ветку master и их можно удалить:<code>git branch -d client</code> <code>git branch -d server</code> Кроме того получена линейная структура коммитов, которую будет понятнее смотреться в удаленном репозитарии</td>
+</tr>
+</table>
+
