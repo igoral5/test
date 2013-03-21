@@ -1,6 +1,6 @@
-Начальная настройка git
-git config --global user.name "John Doe"			Установить глобально (для всех проектов данного пользователя) его имя
-git config --global user.email johndoe@example.com		Установить глобально электронный адрес
+# Начальная настройка git
+`git config --global user.name "John Doe"`			Установить глобально (для всех проектов данного пользователя) его имя
+`git config --global user.email johndoe@example.com`		Установить глобально электронный адрес
 git config --global core.editor kwrite				Установить глобально редактор текста
 git config --global merge.tool meld				Установить глобально программу для разрешения конфликтов
 git config --global color.ui true				Установить глобально цветной вывод на терминал

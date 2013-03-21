@@ -1,5 +1,6 @@
-Запись видео с web камеры без звука
-mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -ovc lavc -lavcopts vcodec=mjpeg -nosound -o test.avi
+# Запись видео с web камеры без звука
+
+`mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -ovc lavc -lavcopts vcodec=mjpeg -nosound -o test.avi`
   
   tv://													Указывает на необходимость захвата видео
   -fps 30												Частота кадров 30 кадров в секунду
@@ -14,8 +15,8 @@ mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -
   -nosound												Без звука
   -o test.avi												Выходной файл test.avi
 
-Запись видео с web камеры со звуком
-mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0:alsa:forceaudio:amode=0:adevice=hw.1,0 -ovc lavc -lavcopts vcodec=mpeg4 -oac mp3lame -lameopts vbr=3:br=32:mode=3 -af volnorm -o test.avi
+# Запись видео с web камеры со звуком
+`mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0:alsa:forceaudio:amode=0:adevice=hw.1,0 -ovc lavc -lavcopts vcodec=mpeg4 -oac mp3lame -lameopts vbr=3:br=32:mode=3 -af volnorm -o test.avi`
 
   tv://													Указывает на необходимость захвата видео
   -fps 30												Частота кадров 30 кадров в секунду
@@ -53,8 +54,8 @@ mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0:a
   -af volnorm												Выполнить нормализацию уровня звука
   -o test.avi												Выходной файл test.avi
   
-Вывести видео с web камеры на экран без звука
-mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -nosound
+# Вывести видео с web камеры на экран без звука
+`mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -nosound`
 
   tv://													Указывает на необходимость захвата видео
   -tv driver=v4l2:width=640:height=480:device=/dev/video0						Субопции уточняющие режим захвата видео
