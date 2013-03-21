@@ -135,7 +135,7 @@
 <td align="left"><code>git rebase master</code></td><td align="left">Перемещение текущей ветки на ветку master</td>
 </tr>
 <tr>
-<td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид веток:
+<td align="left"><code>git rebase --onto master server client</code></td><td align="left">Пусть имеем следующуй вид дерева ветвления:
 <pre>
                master
                  |
