@@ -101,11 +101,7 @@
 |`git branch -D ticket42`                                     | Удалить ветку ticket42, в которой могут быть не влитые коммиты         |
 |`git push origin :serverfix`                                 | Удалить из удаленного репозитария ветку serverfix                      |
 |`git rebase master`                                          | Перемещение текущей ветки на ветку master                              |
-|`git rebase --onto master server client`                     | Пусть имеем следующуй вид веток:
-
-`               master`
-
-`                 |`
+|`git rebase --onto master server client`                     | Пусть имеем следующуй вид веток:<br>>               master<br>>`                 |
 
 `С1<-C2<-С5<-C6<-C7`
 
