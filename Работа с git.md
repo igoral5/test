@@ -186,7 +186,7 @@
 </pre>
 Теперь уже изменения сделанные на ветке server перебазированы на ветку master. Далее переключаемся на ветку master и делаем слияние с веткой server<br>
 <code>git checkout master</code><br>
-<code>git merge server<code><br>
+<code>git merge server</code><br>
 Получаем следующее:
 <pre>
                         client         master
@@ -202,4 +202,3 @@
 </td>
 </tr>
 </table>
-
