@@ -1,22 +1,24 @@
 ## Запись видео с web камеры без звука
 
 `mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -ovc lavc -lavcopts vcodec=mjpeg -nosound -o test.avi`
+
 | Параметр                                           | Описание                                                                      |
 |:---------------------------------------------------|:------------------------------------------------------------------------------|
 |`tv://`                                             | Указывает на необходимость захвата видео                                      |
 |`-fps 30`                                           | Частота кадров 30 кадров в секунду                                            |
 |`-tv driver=v4l2:width=640:height=480:device=/dev/video0`| Субопции уточняющие режим захвата видео                                  |
-| * `driver=v4l2`                                    | Драйвер видео захвата Video for Linux v.2                                     |
-| * `width=640`                                      | Ширина видео 640                                                              |
-| * `height=480`                                     | Высота видео 480                                                              |
-| * `device=/dev/video0`                             | Устройство видео захвата /dev/video0                                          |
-| `-ovc lavc`                                        | Кодировать libavcodec кодеком                                                 |
-| `-lavcopts vcodec=mjpeg`                           | Субопции libavcodec кодека                                                    |
-| * `vcodec=mjpeg`                                   | Кодировать выходной файл алгоритмом Motion JPEG                               |
-| `-nosound`                                         | Без звука                                                                     |
-| `-o test.avi`                                      | Выходной файл test.avi                                                        |
+|* `driver=v4l2`                                    | Драйвер видео захвата Video for Linux v.2                                     |
+|* `width=640`                                      | Ширина видео 640                                                              |
+|* `height=480`                                     | Высота видео 480                                                              |
+|* `device=/dev/video0`                             | Устройство видео захвата /dev/video0                                          |
+|`-ovc lavc`                                        | Кодировать libavcodec кодеком                                                 |
+|`-lavcopts vcodec=mjpeg`                           | Субопции libavcodec кодека                                                    |
+|* `vcodec=mjpeg`                                   | Кодировать выходной файл алгоритмом Motion JPEG                               |
+|`-nosound`                                         | Без звука                                                                     |
+|`-o test.avi`                                      | Выходной файл test.avi                                                        |
 
-# Запись видео с web камеры со звуком
+## Запись видео с web камеры со звуком
+
 `mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0:alsa:forceaudio:amode=0:adevice=hw.1,0 -ovc lavc -lavcopts vcodec=mpeg4 -oac mp3lame -lameopts vbr=3:br=32:mode=3 -af volnorm -o test.avi`
 
   tv://													Указывает на необходимость захвата видео
@@ -55,7 +57,8 @@
   -af volnorm												Выполнить нормализацию уровня звука
   -o test.avi												Выходной файл test.avi
   
-# Вывести видео с web камеры на экран без звука
+## Вывести видео с web камеры на экран без звука
+
 `mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -nosound`
 
   tv://													Указывает на необходимость захвата видео
