@@ -2,4 +2,4 @@
 |:----------|:-----------|:----------|
 |Содержимое клонки 1| Содержимое колонки 2| Содержимое колонки 3 |
 
-`+-------+`<br>`|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|`<br>`|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |`<br>|`       |`<br> `+-------+`
+`+-------+`<br>`|`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|`<br>`|`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `|`<br>`|`   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    |`<br> `+-------+`
