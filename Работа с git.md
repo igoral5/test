@@ -142,8 +142,8 @@
 С1&lt;-C2&lt;-С5&lt;-C6&lt;-C7
      \
       C3&lt;-C4&lt;-C10
-        \       |
-         \    server
+        \      |
+          \   server
           C8&lt;-C9
                |
              client
