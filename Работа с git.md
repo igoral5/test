@@ -143,7 +143,7 @@
      \
       C3&lt;-C4&lt;-C10
         \      |
-          \   server
+         \   server
           C8&lt;-C9
                |
              client
