@@ -7,13 +7,13 @@ mencoder tv:// -fps 30 -tv driver=v4l2:width=640:height=480:device=/dev/video0 -
 |tv://                                             | Указывает на необходимость захвата видео                                      |
 |-fps 30                                           | Частота кадров 30 кадров в секунду                                            |
 |-tv driver=v4l2:width=640:height=480:device=/dev/video0| Субопции уточняющие режим захвата видео                                  |
-|* driver=v4l2                                    | Драйвер видео захвата Video for Linux v.2                                     |
-|*  width=640                                      | Ширина видео 640                                                              |
-|* height=480                                     | Высота видео 480                                                              |
-|* device=/dev/video0                             | Устройство видео захвата /dev/video0                                          |
+|<pre>    driver=v4l2</pre>                                    | Драйвер видео захвата Video for Linux v.2                                     |
+|<pre>    width=640</pre>                                      | Ширина видео 640                                                              |
+|<pre>    height=480</pre>                                     | Высота видео 480                                                              |
+|<pre>    device=/dev/video0</pre>                             | Устройство видео захвата /dev/video0                                          |
 |-ovc lavc                                        | Кодировать libavcodec кодеком                                                 |
 |-lavcopts vcodec=mjpeg                           | Субопции libavcodec кодека                                                    |
-|* vcodec=mjpeg                                   | Кодировать выходной файл алгоритмом Motion JPEG                               |
+|<pre>    vcodec=mjpeg</pre>                                   | Кодировать выходной файл алгоритмом Motion JPEG                               |
 |-nosound                                         | Без звука                                                                     |
 |-o test.avi                                      | Выходной файл test.avi                                                        |
 
