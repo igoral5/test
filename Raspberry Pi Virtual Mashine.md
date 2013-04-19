@@ -10,7 +10,7 @@ Host машина Gentoo x86_64
 
 ### Подготовка Host машины
 
-1. Необходимо, что бы ядро Host машины поддерживало bridging и Ethernet tap сетевые адаптеры. Проверить можно
+ * Необходимо, что бы ядро Host машины поддерживало bridging и Ethernet tap сетевые адаптеры. Проверить можно
 следующими командами:
 
 <pre>alimovl ~ # modprobe bridge
@@ -23,11 +23,11 @@ alimovl ~ # modprobe tun</pre>
 Networking support->Networking options-> <M> 802.1d Ethernet Bridging<br>
 Device Drivers->Network device support->Network core driver support-><M> Universal TUN/TAP device driver support<br>
 
-2. Установим утилиты для управления мостом:
+ * Установим утилиты для управления мостом:
 
 `alimovl ~ # emerge -av net-misc/bridge-utils`
 
-3. Настройка конфигурации моста, файл /etc/conf.d/net:
+ * Настройка конфигурации моста, файл /etc/conf.d/net:
 
 <pre>dns_domain_lo="ваш домен" # замените своим именем домена
 config_eth0="null"
@@ -76,7 +76,7 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 
 При этом связь Host машины с внешним миром и Internet должна нормально функционировать.
 
-4. Установим kpartx:
+ * Установим kpartx:
 
 `alimovl ~ # emerge -av sys-fs/multipath-tools`
 
@@ -109,30 +109,30 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 ### Подготовка образа диска
 
 Пусть образ лежит в /home/igor/qemu/Raspberry, туда же положим ядро kernel-qemu.
-Распакуем образ диска:
+ * Распакуем образ диска:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip
 Archive:  2013-02-09-wheezy-raspbian.zip
   inflating: 2013-02-09-wheezy-raspbian.img</pre>
 
-Образ диска имеет два раздела и что бы смонтировать его предварительно сделаем маппинг:
+ * Образ диска имеет два раздела и что бы смонтировать его предварительно сделаем маппинг:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img
 add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192
 add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880</pre>
 
-Создаем каталоги для монтирования:
+ * Создаем каталоги для монтирования:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry
 igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk1
 igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2</pre>
 
-Монтируем диски:
+ * Монтируем диски:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
 igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2</pre>
 
-В Raspberry Pi качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
+ * В Raspberry Pi качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
 Некорые программы обращаются к этим устройствам, для того что бы не возникало ошибок создадим файл /mnt/raspberry/disk2/etc/udev/rules.d/90-qemu.rules
 следующего содержания:
 
@@ -141,11 +141,11 @@ KERNEL=="sda?", SYMLINK+="mmcblk0p%n"</pre>
 
 Это обеспечит автоматическое создание символьных ссылок на устройство /dev/sda и его разделы
 
-Закомментируем содержимое файла /mnt/raspberry/disk2/etc/ld.so.preload:
+* Закомментируем содержимое файла /mnt/raspberry/disk2/etc/ld.so.preload:
 
 \# /usr/lib/arm-linux-gnueabihf/libcofi_rpi.so
 
-Для большего разрешения экрана при запуске X window создадим файл /mnt/raspberry/disk2/etc/X11/xorg.conf следующего содержания:
+* Для большего разрешения экрана при запуске X window создадим файл /mnt/raspberry/disk2/etc/X11/xorg.conf следующего содержания:
 
 <pre>Section "Screen"
 Identifier "Default Screen"
@@ -155,14 +155,14 @@ Modes "800x600" "640x480"
 EndSubSection
 EndSection</pre>
 
-Размонтируем диски и отменим мапирование диска:
+ * Размонтируем диски и отменим мапирование диска:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1
 igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p2
 igor@alimovl ~/qemu/Raspberry $ sudo kpartx -d 2013-02-09-wheezy-raspbian.img
 loop deleted : /dev/loop0</pre>
 
-На полученном образе диска мало свободного места и рекомендуется его расширить:
+* На полученном образе диска мало свободного места и рекомендуется его расширить:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G
 Image resized.</pre>
@@ -173,13 +173,14 @@ Image resized.</pre>
 
 Запуск осуществляется командой:
 
-`qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb -no-reboot -net nic -net bridge -serial stdio -append "root=/dev/sda2 panic=1" -hda 2013-02-09-wheezy-raspbian.img`
+`qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb -no-reboot -net nic -net bridge `
+`-serial stdio -append "root=/dev/sda2 panic=1" -hda 2013-02-09-wheezy-raspbian.img`
 
 При первом запуске были проблемы с монтированим диска (его удалось смонтировать только в режиме read-only), если это так, выполним команду:
 
 `fsck.ext4 /dev/sda2`
 
-На вопросы <Fix что-то>? отвечать y. После завершения проверки нажать Ctrl-D.
+На вопросы \<Fix что-то\>? отвечать y. После завершения проверки нажать Ctrl-D.
 
 В процессе загрузки неизбежно будут возникать ошибки (мы запускаем систему с не родным ядром), но к счатью не критические.
 
@@ -187,23 +188,23 @@ Image resized.</pre>
 
 Если загрузка будет успешной, мы автоматически попадаем в программу первоначальной настройки raspi-config (затем ее можно будет вызвать командой sudo raspi-config).
 
-1. Раширяем корневой раздел: 
+ * Раширяем корневой раздел: 
 
 `expand_rootfs      Expand root partition to fill SD card`
 
-2. Устанавливаем локали:
+ * Устанавливаем локали:
 
 `change_locale      Set locale`
 
 Снимаем выделение с локали en_GB.UTF-8 UTF-8 и выделяем локали en_US.UTF-8 UTF-8 и ru_RU.UTF-8 UTF-8. Локалью по умолчанию назначаем ru_RU.UTF-8 UTF-8.
 
-3. Устанавливаем часовой пояс:
+ * Устанавливаем часовой пояс:
 
 `change_timezone    Set timezone`
 
 Выбираем Europe Moscow (или необходимый вам часовой пояс)
 
-4. Настраиваем ввод и вывод консоли:
+ * Настраиваем ввод и вывод консоли:
 
 `configure_keyboard Set keyboard layout`
 
@@ -215,13 +216,13 @@ Method for toggling between national and Latin mode: Alt+Shift
 Method for temporarily toggling between national and Latin input: No temporary switch
 Key to function as AltGr: The default for the keyboard layout
 Compose key: No compose key
-Use Control+Alt+Backspace to terminate the X server? <Yes></pre>
+Use Control+Alt+Backspace to terminate the X server? \<Yes\></pre>
 
-5. Устанавливаем пароль пользователя pi:
+ * Устанавливаем пароль пользователя pi:
 
 `change_pass        Change password for 'pi' user`
 
-Выходим из raspi-config с перезагрузкой
+ * Выходим из raspi-config с перезагрузкой
 
 6. После перегрузки можно установить необходимые компоненты и выполнить обновление системы:
 
