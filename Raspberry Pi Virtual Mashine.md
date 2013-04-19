@@ -17,10 +17,11 @@ Host машина Gentoo x86_64
 alimovl ~ # modprobe tun</pre>
 
 если модули загружаются без ошибок - поддержка в ядре реализована. В противном случае, конфигурим и собираем новое ядро.
+
 `alimovl ~ #  genkernel --menuconfig all`
 
-Networking support->Networking options-> <M> 802.1d Ethernet Bridging
-Device Drivers->Network device support->Network core driver support-><M> Universal TUN/TAP device driver support
+Networking support->Networking options-> <M> 802.1d Ethernet Bridging<br>
+Device Drivers->Network device support->Network core driver support-><M> Universal TUN/TAP device driver support<br>
 
 2. Установим утилиты для управления мостом:
 
@@ -112,13 +113,13 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 
 <pre>igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip
 Archive:  2013-02-09-wheezy-raspbian.zip
-  inflating: 2013-02-09-wheezy-raspbian.img<pre>
+  inflating: 2013-02-09-wheezy-raspbian.img</pre>
 
 Образ диска имеет два раздела и что бы смонтировать его предварительно сделаем маппинг:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img
 add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192
-add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880<pre>
+add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880</pre>
 
 Создаем каталоги для монтирования:
 
@@ -128,7 +129,7 @@ igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2</pre>
 
 Монтируем диски:
 
-igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
+<pre>igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
 igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2</pre>
 
 В Raspberry Pi качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
