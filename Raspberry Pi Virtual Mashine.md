@@ -112,7 +112,7 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 
 ### Подготовка образа диска
 
-Пусть образ лежит в /home/igor/qemu/Raspberry, туда же положим ядро kernel-qemu.
+Пусть образ диска лежит в /home/igor/qemu/Raspberry, туда же положим ядро kernel-qemu.
  * Распакуем образ диска:
 
 <pre>igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip
@@ -136,7 +136,7 @@ igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2</pre>
 <pre>igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
 igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2</pre>
 
- * В Raspberry Pi качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
+ * В Raspberry Pi в качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
 Некорые программы обращаются к этим устройствам, для того что бы не возникало ошибок создадим файл /mnt/raspberry/disk2/etc/udev/rules.d/90-qemu.rules
 следующего содержания:
 
