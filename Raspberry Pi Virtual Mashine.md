@@ -13,35 +13,35 @@ Host машина Gentoo x86_64
 1. Необходимо, что бы ядро Host машины поддерживало bridging и Ethernet tap сетевые адаптеры. Проверить можно
 следующими командами:
 
-alimovl ~ # modprobe bridge
-alimovl ~ # modprobe tun
+`alimovl ~ # modprobe bridge`
+`alimovl ~ # modprobe tun`
 
 если модули загружаются без ошибок - поддержка в ядре реализована. В противном случае, конфигурим и собираем новое ядро.
-alimovl ~ #  genkernel --menuconfig all
+`alimovl ~ #  genkernel --menuconfig all`
 
 Networking support->Networking options-> <M> 802.1d Ethernet Bridging
 Device Drivers->Network device support->Network core driver support-><M> Universal TUN/TAP device driver support
 
 2. Установим утилиты для управления мостом:
 
-alimovl ~ # emerge -av net-misc/bridge-utils
+`alimovl ~ # emerge -av net-misc/bridge-utils`
 
 3. Настройка конфигурации моста, файл /etc/conf.d/net:
 
-dns_domain_lo="ваш домен" # замените своим именем домена
+<pre>dns_domain_lo="ваш домен" # замените своим именем домена
 config_eth0="null"
 bridge_br0="eth0"
-config_br0="dhcp"
+config_br0="dhcp"</pre>
 
 Если вы используете статический IP - адрес, настройте br0 соотвествующим образом.
 
-alimovl ~ # cd /etc/init.d/   
-alimovl init.d # ln -s net.lo net.br0
-alimovl init.d # rc-update add net.br0 default
+`alimovl ~ # cd /etc/init.d/`
+`alimovl init.d # ln -s net.lo net.br0`
+`alimovl init.d # rc-update add net.br0 default`
 
 После применения изменений (перегрузки) должны получить следующую картину:
 
-alimovl ~ # ifconfig
+<pre>alimovl ~ # ifconfig
 br0: flags=4419<UP,BROADCAST,RUNNING,PROMISC,MULTICAST>  mtu 1500
         inet 192.168.181.113  netmask 255.255.255.0  broadcast 192.168.181.255
         inet6 fe80::3ed9:2bff:fe58:e439  prefixlen 64  scopeid 0x20<link>
@@ -71,31 +71,31 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 alimovl ~ # brctl show
 bridge name     bridge id               STP enabled     interfaces
-br0             8000.3cd92b58e439       no              eth0
+br0             8000.3cd92b58e439       no              eth0</pre>
 
 При этом связь Host машины с внешним миром и Internet должна нормально функционировать.
 
 4. Установим kpartx:
 
-alimovl ~ # emerge -av sys-fs/multipath-tools
+`alimovl ~ # emerge -av sys-fs/multipath-tools`
 
 ### Установка QEMU
 
 От QEMU нам потребуется поддержка ARM платформы, поэтому в файл /etc/portage/package.use добавим строку:
 
-app-emulation/qemu qemu_softmmu_targets_arm -qemu_softmmu_targets_x86_64
+`app-emulation/qemu qemu_softmmu_targets_arm -qemu_softmmu_targets_x86_64`
 
 опция qemu_softmmu_targets_arm добавляет поддержку ARM платформы, -qemu_softmmu_targets_x86_64 выключает эмуляцию 
 платформы x86_64 (если она вам нужна, удалите ее)
 
 Сборка и установка QEMU:
 
-alimovl ~ # emerge -av app-emulation/qemu
+`alimovl ~ # emerge -av app-emulation/qemu`
 
 В процессе запуска виртальной машины необходимы административные привилегии для создания сетевого интерфейса и включения его в мост.
 Для того что бы иметь возможность запускать виртуальную машину из под обычного пользователя выполним:
 
-alimovl ~ # chmod u+s /usr/libexec/qemu-bridge-helper
+`alimovl ~ # chmod u+s /usr/libexec/qemu-bridge-helper`
 
 ### Получение ядра
 
@@ -110,61 +110,61 @@ alimovl ~ # chmod u+s /usr/libexec/qemu-bridge-helper
 Пусть образ лежит в /home/igor/qemu/Raspberry, туда же положим ядро kernel-qemu.
 Распакуем образ диска:
 
-igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip 
-Archive:  2013-02-09-wheezy-raspbian.zip
-  inflating: 2013-02-09-wheezy-raspbian.img
+`igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip `
+`Archive:  2013-02-09-wheezy-raspbian.zip`
+`  inflating: 2013-02-09-wheezy-raspbian.img`
 
 Образ диска имеет два раздела и что бы смонтировать его предварительно сделаем маппинг:
 
-igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img 
-add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192
-add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880
+`igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img `
+`add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192`
+`add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880`
 
 Создаем каталоги для монтирования:
 
-igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry
-igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk1
-igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2
+`igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry`
+`igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk1`
+`igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2`
 
 Монтируем диски:
 
-igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
-igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2
+`igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1`
+`igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2`
 
 В Raspberry Pi качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
 Некорые программы обращаются к этим устройствам, для того что бы не возникало ошибок создадим файл /mnt/raspberry/disk2/etc/udev/rules.d/90-qemu.rules
 следующего содержания:
 
-KERNEL=="sda", SYMLINK+="mmcblk0"
-KERNEL=="sda?", SYMLINK+="mmcblk0p%n"
+`KERNEL=="sda", SYMLINK+="mmcblk0"`
+`KERNEL=="sda?", SYMLINK+="mmcblk0p%n"`
 
 Это обеспечит автоматическое создание символьных ссылок на устройство /dev/sda и его разделы
 
 Закомментируем содержимое файла /mnt/raspberry/disk2/etc/ld.so.preload:
 
-# /usr/lib/arm-linux-gnueabihf/libcofi_rpi.so
+\# /usr/lib/arm-linux-gnueabihf/libcofi_rpi.so
 
 Для большего разрешения экрана при запуске X window создадим файл /mnt/raspberry/disk2/etc/X11/xorg.conf следующего содержания:
 
-Section "Screen"
+<pre>Section "Screen"
 Identifier "Default Screen"
 SubSection "Display"
 Depth 16
 Modes "800x600" "640x480"
 EndSubSection
-EndSection
+EndSection</pre>
 
 Размонтируем диски и отменим мапирование диска:
 
-igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1
-igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p2
-igor@alimovl ~/qemu/Raspberry $ sudo kpartx -d 2013-02-09-wheezy-raspbian.img 
-loop deleted : /dev/loop0
+`igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1`
+`igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p2`
+`igor@alimovl ~/qemu/Raspberry $ sudo kpartx -d 2013-02-09-wheezy-raspbian.img`
+`loop deleted : /dev/loop0`
 
 На полученном образе диска мало свободного места и рекомендуется его расширить:
 
-igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G
-Image resized.
+`igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G`
+`Image resized.`
 
 Эта команда увеличивает размер образа диска на 2 Gb.
 
@@ -172,11 +172,11 @@ Image resized.
 
 Запуск осуществляется командой:
 
-qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb -no-reboot -net nic -net bridge -serial stdio -append "root=/dev/sda2 panic=1" -hda 2013-02-09-wheezy-raspbian.img
+`qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb -no-reboot -net nic -net bridge -serial stdio -append "root=/dev/sda2 panic=1" -hda 2013-02-09-wheezy-raspbian.img`
 
 При первом запуске были проблемы с монтированим диска (его удалось смонтировать только в режиме read-only), если это так, выполним команду:
 
-fsck.ext4 /dev/sda2
+`fsck.ext4 /dev/sda2`
 
 На вопросы <Fix что-то>? отвечать y. После завершения проверки нажать Ctrl-D.
 
@@ -185,39 +185,40 @@ fsck.ext4 /dev/sda2
 ### Первоначальная настройка виртуальной машины
 
 Если загрузка будет успешной, мы автоматически попадаем в программу первоначальной настройки raspi-config (затем ее можно будет вызвать командой sudo raspi-config).
+
 1. Раширяем корневой раздел: 
 
-expand_rootfs      Expand root partition to fill SD card
+`expand_rootfs      Expand root partition to fill SD card`
 
 2. Устанавливаем локали:
 
-change_locale      Set locale
+`change_locale      Set locale`
 
 Снимаем выделение с локали en_GB.UTF-8 UTF-8 и выделяем локали en_US.UTF-8 UTF-8 и ru_RU.UTF-8 UTF-8. Локалью по умолчанию назначаем ru_RU.UTF-8 UTF-8.
 
 3. Устанавливаем часовой пояс:
 
-change_timezone    Set timezone
+`change_timezone    Set timezone`
 
 Выбираем Europe Moscow (или необходимый вам часовой пояс)
 
 4. Настраиваем ввод и вывод консоли:
 
-configure_keyboard Set keyboard layout
+`configure_keyboard Set keyboard layout`
 
-Выбираем Generic 105-key (Intl) PC 
-Keyboard layout: Other
-Country of origin for the keyboard: Russian
-Keyboard layout: Russian
-Method for toggling between national and Latin mode: Alt+Shift
-Method for temporarily toggling between national and Latin input: No temporary switch
-Key to function as AltGr: The default for the keyboard layout
-Compose key: No compose key
-Use Control+Alt+Backspace to terminate the X server? <Yes>
+`Выбираем Generic 105-key (Intl) PC`
+`Keyboard layout: Other`
+`Country of origin for the keyboard: Russian`
+`Keyboard layout: Russian`
+`Method for toggling between national and Latin mode: Alt+Shift`
+`Method for temporarily toggling between national and Latin input: No temporary switch`
+`Key to function as AltGr: The default for the keyboard layout`
+`Compose key: No compose key`
+`Use Control+Alt+Backspace to terminate the X server? <Yes>`
 
 5. Устанавливаем пароль пользователя pi:
 
-change_pass        Change password for 'pi' user 
+`change_pass        Change password for 'pi' user`
 
 Выходим из raspi-config с перезагрузкой
 
@@ -225,20 +226,20 @@ change_pass        Change password for 'pi' user
 
 Если вы для доступа в Internet используете прокси сервер, создайте файл /etc/apt/apt.conf.d/90proxy:
 
-pi@raspberrypi ~ $ sudo nano /etc/apt/apt.conf.d/90proxy
+`pi@raspberrypi ~ $ sudo nano /etc/apt/apt.conf.d/90proxy`
 
 Следующего содержания:
 
-Acquire::http::Proxy "http://yourproxyaddress:proxyport";
+`Acquire::http::Proxy "http://yourproxyaddress:proxyport";`
 
 Выполняем команды:
 
-sudo apt-get update
-sudo apt-get install console-cyrillic mc gpm
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
-sudo apt-get autoremove
-sudo apt-get clean
+`sudo apt-get update`
+`sudo apt-get install console-cyrillic mc gpm`
+`sudo apt-get upgrade`
+`sudo apt-get dist-upgrade`
+`sudo apt-get autoremove`
+`sudo apt-get clean`
 
 После выполения этих команд, мы установим кириллические консольные шрифты, Midnight Commander, мышь консольного режима и выполним обновление системы.
 
@@ -247,12 +248,12 @@ sudo apt-get clean
 
 Использованные материалы:
 
-[http://www.v13.gr/blog/?p=276]
-[http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/]
-[http://www.soslug.org/wiki/raspberry_pi_emulation]
-[https://help.ubuntu.com/community/AptGet/Howto]
-[http://ru.gentoo-wiki.com/wiki/%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%92%D0%9C_qemu_%D0%B2_%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D1%81%D0%B5%D1%82%D1%8C]
-[http://en.gentoo-wiki.com/wiki/Bridging_Network_Interfaces]
+http://www.v13.gr/blog/?p=276
+http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/
+http://www.soslug.org/wiki/raspberry_pi_emulation
+https://help.ubuntu.com/community/AptGet/Howto
+http://ru.gentoo-wiki.com/wiki/%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%92%D0%9C_qemu_%D0%B2_%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D1%81%D0%B5%D1%82%D1%8C
+http://en.gentoo-wiki.com/wiki/Bridging_Network_Interfaces
 
 
 
