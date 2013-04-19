@@ -216,7 +216,7 @@ Method for toggling between national and Latin mode: Alt+Shift
 Method for temporarily toggling between national and Latin input: No temporary switch
 Key to function as AltGr: The default for the keyboard layout
 Compose key: No compose key
-Use Control+Alt+Backspace to terminate the X server? <Yes></pre>
+Use Control+Alt+Backspace to terminate the X server? &lt;Yes&gt;</pre>
 
  * Устанавливаем пароль пользователя pi:
 
