@@ -13,8 +13,8 @@ Host машина Gentoo x86_64
 1. Необходимо, что бы ядро Host машины поддерживало bridging и Ethernet tap сетевые адаптеры. Проверить можно
 следующими командами:
 
-`alimovl ~ # modprobe bridge`
-`alimovl ~ # modprobe tun`
+<pre>alimovl ~ # modprobe bridge
+alimovl ~ # modprobe tun</pre>
 
 если модули загружаются без ошибок - поддержка в ядре реализована. В противном случае, конфигурим и собираем новое ядро.
 `alimovl ~ #  genkernel --menuconfig all`
@@ -35,9 +35,9 @@ config_br0="dhcp"</pre>
 
 Если вы используете статический IP - адрес, настройте br0 соотвествующим образом.
 
-`alimovl ~ # cd /etc/init.d/`
-`alimovl init.d # ln -s net.lo net.br0`
-`alimovl init.d # rc-update add net.br0 default`
+<pre>alimovl ~ # cd /etc/init.d/
+alimovl init.d # ln -s net.lo net.br0
+alimovl init.d # rc-update add net.br0 default</pre>
 
 После применения изменений (перегрузки) должны получить следующую картину:
 
@@ -110,33 +110,33 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 Пусть образ лежит в /home/igor/qemu/Raspberry, туда же положим ядро kernel-qemu.
 Распакуем образ диска:
 
-`igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip `
-`Archive:  2013-02-09-wheezy-raspbian.zip`
-`  inflating: 2013-02-09-wheezy-raspbian.img`
+<pre>igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip
+Archive:  2013-02-09-wheezy-raspbian.zip
+  inflating: 2013-02-09-wheezy-raspbian.img<pre>
 
 Образ диска имеет два раздела и что бы смонтировать его предварительно сделаем маппинг:
 
-`igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img `
-`add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192`
-`add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880`
+<pre>igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img
+add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192
+add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880<pre>
 
 Создаем каталоги для монтирования:
 
-`igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry`
-`igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk1`
-`igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2`
+<pre>igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry
+igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk1
+igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2</pre>
 
 Монтируем диски:
 
-`igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1`
-`igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2`
+igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
+igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2</pre>
 
 В Raspberry Pi качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
 Некорые программы обращаются к этим устройствам, для того что бы не возникало ошибок создадим файл /mnt/raspberry/disk2/etc/udev/rules.d/90-qemu.rules
 следующего содержания:
 
-`KERNEL=="sda", SYMLINK+="mmcblk0"`
-`KERNEL=="sda?", SYMLINK+="mmcblk0p%n"`
+<pre>KERNEL=="sda", SYMLINK+="mmcblk0"
+KERNEL=="sda?", SYMLINK+="mmcblk0p%n"</pre>
 
 Это обеспечит автоматическое создание символьных ссылок на устройство /dev/sda и его разделы
 
@@ -156,15 +156,15 @@ EndSection</pre>
 
 Размонтируем диски и отменим мапирование диска:
 
-`igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1`
-`igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p2`
-`igor@alimovl ~/qemu/Raspberry $ sudo kpartx -d 2013-02-09-wheezy-raspbian.img`
-`loop deleted : /dev/loop0`
+<pre>igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1
+igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p2
+igor@alimovl ~/qemu/Raspberry $ sudo kpartx -d 2013-02-09-wheezy-raspbian.img
+loop deleted : /dev/loop0</pre>
 
 На полученном образе диска мало свободного места и рекомендуется его расширить:
 
-`igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G`
-`Image resized.`
+<pre>igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G
+Image resized.</pre>
 
 Эта команда увеличивает размер образа диска на 2 Gb.
 
@@ -206,15 +206,15 @@ EndSection</pre>
 
 `configure_keyboard Set keyboard layout`
 
-`Выбираем Generic 105-key (Intl) PC`
-`Keyboard layout: Other`
-`Country of origin for the keyboard: Russian`
-`Keyboard layout: Russian`
-`Method for toggling between national and Latin mode: Alt+Shift`
-`Method for temporarily toggling between national and Latin input: No temporary switch`
-`Key to function as AltGr: The default for the keyboard layout`
-`Compose key: No compose key`
-`Use Control+Alt+Backspace to terminate the X server? <Yes>`
+<pre>Выбираем Generic 105-key (Intl) PC
+Keyboard layout: Other
+Country of origin for the keyboard: Russian
+Keyboard layout: Russian
+Method for toggling between national and Latin mode: Alt+Shift
+Method for temporarily toggling between national and Latin input: No temporary switch
+Key to function as AltGr: The default for the keyboard layout
+Compose key: No compose key
+Use Control+Alt+Backspace to terminate the X server? <Yes></pre>
 
 5. Устанавливаем пароль пользователя pi:
 
@@ -234,12 +234,12 @@ EndSection</pre>
 
 Выполняем команды:
 
-`sudo apt-get update`
-`sudo apt-get install console-cyrillic mc gpm`
-`sudo apt-get upgrade`
-`sudo apt-get dist-upgrade`
-`sudo apt-get autoremove`
-`sudo apt-get clean`
+<pre>sudo apt-get update
+sudo apt-get install console-cyrillic mc gpm
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get autoremove
+sudo apt-get clean</pre>
 
 После выполения этих команд, мы установим кириллические консольные шрифты, Midnight Commander, мышь консольного режима и выполним обновление системы.
 
@@ -248,12 +248,13 @@ EndSection</pre>
 
 Использованные материалы:
 
-http://www.v13.gr/blog/?p=276
-http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/
-http://www.soslug.org/wiki/raspberry_pi_emulation
-https://help.ubuntu.com/community/AptGet/Howto
-http://ru.gentoo-wiki.com/wiki/%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%92%D0%9C_qemu_%D0%B2_%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D1%81%D0%B5%D1%82%D1%8C
-http://en.gentoo-wiki.com/wiki/Bridging_Network_Interfaces
+http://www.v13.gr/blog/?p=276<br>
+http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/<br>
+http://www.soslug.org/wiki/raspberry_pi_emulation<br>
+https://help.ubuntu.com/community/AptGet/Howto<br>
+http://ru.gentoo-wiki.com/wiki/%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%92%D0%9C_qemu_%D0%B2_%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D1%81%D0%B5%D1%82%D1%8C<br>
+http://en.gentoo-wiki.com/wiki/Bridging_Network_Interfaces<br>
+
 
 
 
