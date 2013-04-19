@@ -26,12 +26,12 @@ alimovl ~ # modprobe tun
 Device Drivers --->
   Network device support --->
     Network device support (NETDEVICES [=y]) --->
-      <M> Universal TUN/TAP device driver support
+      &lt;M&gt; Universal TUN/TAP device driver support
       
 Networking --->
   Networking support (NET [=y]) --->
     Networking options --->
-      <M> 802.1d Ethernet Bridging_Network_Interfaces
+      &lt;M&gt; 802.1d Ethernet Bridging_Network_Interfaces
 </pre>
 
  * Установим утилиты для управления мостом:
