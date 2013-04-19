@@ -80,7 +80,7 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 
 `alimovl ~ # emerge -av sys-fs/multipath-tools`
 
-### Установка QEMU
+### Установка и настройка QEMU
 
 От QEMU нам потребуется поддержка ARM платформы, поэтому в файл /etc/portage/package.use добавим строку:
 
@@ -97,6 +97,10 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 Для того что бы иметь возможность запускать виртуальную машину из под обычного пользователя выполним:
 
 `alimovl ~ # chmod u+s /usr/libexec/qemu-bridge-helper`
+
+Откроем  файл /etc/qemu/bridge.conf и раскомментируем строку:
+
+`allow br0`
 
 ### Получение ядра
 
