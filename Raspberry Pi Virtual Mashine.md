@@ -13,8 +13,10 @@ Host машина Gentoo x86_64
  * Необходимо, что бы ядро Host машины поддерживало bridging и Ethernet tap сетевые адаптеры. Проверить можно
 следующими командами:
 
-<pre>alimovl ~ # modprobe bridge
-alimovl ~ # modprobe tun</pre>
+<pre>
+alimovl ~ # modprobe bridge
+alimovl ~ # modprobe tun
+</pre>
 
 если модули загружаются без ошибок - поддержка в ядре реализована. В противном случае, конфигурим и собираем новое ядро.
 
@@ -29,20 +31,25 @@ Device Drivers->Network device support->Network core driver support->&lt;M&gt; U
 
  * Настройка конфигурации моста, файл /etc/conf.d/net:
 
-<pre>dns_domain_lo="ваш домен" # замените своим именем домена
+<pre>
+dns_domain_lo="ваш домен" # замените своим именем домена
 config_eth0="null"
 bridge_br0="eth0"
-config_br0="dhcp"</pre>
+config_br0="dhcp"
+</pre>
 
 Если вы используете статический IP - адрес, настройте br0 соотвествующим образом.
 
-<pre>alimovl ~ # cd /etc/init.d/
+<pre>
+alimovl ~ # cd /etc/init.d/
 alimovl init.d # ln -s net.lo net.br0
-alimovl init.d # rc-update add net.br0 default</pre>
+alimovl init.d # rc-update add net.br0 default
+</pre>
 
 После применения изменений (перегрузки) должны получить следующую картину:
 
-<pre>alimovl ~ # ifconfig
+<pre>
+alimovl ~ # ifconfig
 br0: flags=4419<UP,BROADCAST,RUNNING,PROMISC,MULTICAST>  mtu 1500
         inet 192.168.181.113  netmask 255.255.255.0  broadcast 192.168.181.255
         inet6 fe80::3ed9:2bff:fe58:e439  prefixlen 64  scopeid 0x20<link>
@@ -72,7 +79,8 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 alimovl ~ # brctl show
 bridge name     bridge id               STP enabled     interfaces
-br0             8000.3cd92b58e439       no              eth0</pre>
+br0             8000.3cd92b58e439       no              eth0
+</pre>
 
 При этом связь Host машины с внешним миром и Internet должна нормально функционировать.
 
@@ -115,33 +123,43 @@ br0             8000.3cd92b58e439       no              eth0</pre>
 Пусть образ диска лежит в /home/igor/qemu/Raspberry, туда же положим ядро kernel-qemu.
  * Распакуем образ диска:
 
-<pre>igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip
+<pre>
+igor@alimovl ~/qemu/Raspberry $ unzip 2013-02-09-wheezy-raspbian.zip
 Archive:  2013-02-09-wheezy-raspbian.zip
-  inflating: 2013-02-09-wheezy-raspbian.img</pre>
+  inflating: 2013-02-09-wheezy-raspbian.img
+</pre>
 
  * Образ диска имеет два раздела и что бы смонтировать его предварительно сделаем маппинг:
 
-<pre>igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img
+<pre>
+igor@alimovl ~/qemu/Raspberry $ sudo kpartx -av 2013-02-09-wheezy-raspbian.img
 add map loop0p1 (253:0): 0 114688 linear /dev/loop0 8192
-add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880</pre>
+add map loop0p2 (253:1): 0 3665920 linear /dev/loop0 122880
+</pre>
 
  * Создаем каталоги для монтирования:
 
-<pre>igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry
+<pre>
+igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry
 igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk1
-igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2</pre>
+igor@alimovl ~/qemu/Raspberry $ sudo mkdir /mnt/raspberry/disk2
+</pre>
 
  * Монтируем диски:
 
-<pre>igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
-igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2</pre>
+<pre>
+igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p1 /mnt/raspberry/disk1
+igor@alimovl ~/qemu/Raspberry $ sudo mount /dev/mapper/loop0p2 /mnt/raspberry/disk2
+</pre>
 
  * В Raspberry Pi в качестве диска используется SD карточка, которая видна в системе /dev/mmcblk0 и /dev/mmcblk0p1, /dev/mmcblk0p2 ее разделы.
 Некорые программы обращаются к этим устройствам, для того что бы не возникало ошибок создадим файл /mnt/raspberry/disk2/etc/udev/rules.d/90-qemu.rules
 следующего содержания:
 
-<pre>KERNEL=="sda", SYMLINK+="mmcblk0"
-KERNEL=="sda?", SYMLINK+="mmcblk0p%n"</pre>
+<pre>
+KERNEL=="sda", SYMLINK+="mmcblk0"
+KERNEL=="sda?", SYMLINK+="mmcblk0p%n"
+</pre>
 
 Это обеспечит автоматическое создание символьных ссылок на устройство /dev/sda и его разделы
 
@@ -151,25 +169,31 @@ KERNEL=="sda?", SYMLINK+="mmcblk0p%n"</pre>
 
 * Для большего разрешения экрана при запуске X window создадим файл /mnt/raspberry/disk2/etc/X11/xorg.conf следующего содержания:
 
-<pre>Section "Screen"
+<pre>
+Section "Screen"
 Identifier "Default Screen"
 SubSection "Display"
 Depth 16
 Modes "800x600" "640x480"
 EndSubSection
-EndSection</pre>
+EndSection
+</pre>
 
  * Размонтируем диски и отменим мапирование диска:
 
-<pre>igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1
+<pre>
+igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p1
 igor@alimovl ~/qemu/Raspberry $ sudo umount /dev/mapper/loop0p2
 igor@alimovl ~/qemu/Raspberry $ sudo kpartx -d 2013-02-09-wheezy-raspbian.img
-loop deleted : /dev/loop0</pre>
+loop deleted : /dev/loop0
+</pre>
 
 * На полученном образе диска мало свободного места и рекомендуется его расширить:
 
-<pre>igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G
-Image resized.</pre>
+<pre>
+igor@alimovl ~/qemu/Raspberry $ qemu-img resize 2013-02-09-wheezy-raspbian.img +2G
+Image resized.
+</pre>
 
 Эта команда увеличивает размер образа диска на 2 Gb.
 
@@ -212,7 +236,9 @@ Image resized.</pre>
 
 `configure_keyboard Set keyboard layout`
 
-<pre>Выбираем Generic 105-key (Intl) PC
+Выбираем 
+<pre>
+Generic 105-key (Intl) PC
 Keyboard layout: Other
 Country of origin for the keyboard: Russian
 Keyboard layout: Russian
@@ -220,7 +246,8 @@ Method for toggling between national and Latin mode: Alt+Shift
 Method for temporarily toggling between national and Latin input: No temporary switch
 Key to function as AltGr: The default for the keyboard layout
 Compose key: No compose key
-Use Control+Alt+Backspace to terminate the X server? &lt;Yes&gt;</pre>
+Use Control+Alt+Backspace to terminate the X server? &lt;Yes&gt;
+</pre>
 
  * Устанавливаем пароль пользователя pi:
 
@@ -240,12 +267,14 @@ Use Control+Alt+Backspace to terminate the X server? &lt;Yes&gt;</pre>
 
 Выполняем команды:
 
-<pre>sudo apt-get update
+<pre>
+sudo apt-get update
 sudo apt-get install console-cyrillic mc gpm
 sudo apt-get upgrade
 sudo apt-get dist-upgrade
 sudo apt-get autoremove
-sudo apt-get clean</pre>
+sudo apt-get clean
+</pre>
 
 После выполения этих команд, мы установим кириллические консольные шрифты, Midnight Commander, мышь консольного режима и выполним обновление системы.
 
