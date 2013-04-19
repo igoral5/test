@@ -21,7 +21,7 @@ alimovl ~ # modprobe tun</pre>
 `alimovl ~ #  genkernel --menuconfig all`
 
 Networking support->Networking options-> <M> 802.1d Ethernet Bridging<br>
-Device Drivers->Network device support->Network core driver support-><M> Universal TUN/TAP device driver support<br>
+Device Drivers->Network device support->Network core driver support->&lt;M&gt; Universal TUN/TAP device driver support<br>
 
  * Установим утилиты для управления мостом:
 
